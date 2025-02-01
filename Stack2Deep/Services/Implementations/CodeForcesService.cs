@@ -1,5 +1,9 @@
 using System.Text.Json;
+
+using Stack2Deep.Configuration;
+
 using Stack2Deep.CodeForces;
+
 using Stack2Deep.Services.Interfaces;
 
 namespace Stack2Deep.Services.Implementations;
@@ -9,7 +13,6 @@ internal sealed class CodeForcesService : ICodeForcesService
     private const string Before = "BEFORE";
     
     private const string BaseUri = "https://codeforces.com/api/";
-    private const string PostUri = "";
     
     private readonly HttpClient _client = new HttpClient();
 
@@ -97,16 +100,20 @@ internal sealed class CodeForcesService : ICodeForcesService
     {
         try
         {
-            var result = await GetJson($"contest.standings?contestId={contestId}&handles={codeforcesId}&showUnofficial=true");
+            var result =
+                await GetJson($"contest.standings?contestId={contestId}&handles={codeforcesId}&showUnofficial=true");
             if (!result.Item1)
                 return false;
-                    
+
             var root = JsonDocument.Parse(result.Item2).RootElement;
 
             if (root.GetProperty("status").GetString() == "OK")
                 return root.GetProperty("result").GetProperty("rows").GetArrayLength() > 0;
         }
-        catch { }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
 
         return false;
     }
@@ -135,7 +142,13 @@ internal sealed class CodeForcesService : ICodeForcesService
                     {
                         var pushed = participant.PushTask(problemId.Value);
                         if (pushed)
-                            await _client.PostAsJsonAsync(PostUri, new { message = $"{participant.Handle} has solved {problemName}!", code = 200 });
+                        {
+                            await _client.PostAsJsonAsync(StackConfigurationManager.Configuration.BotURI, new
+                            {
+                                user_id = participant.Handle,
+                                problem = problemName
+                            });
+                        }
                     }
                 }
             }
