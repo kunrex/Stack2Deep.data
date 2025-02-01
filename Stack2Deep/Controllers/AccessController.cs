@@ -37,4 +37,21 @@ internal sealed class AccessController : BaseController
             return InternalError();
         }
     }
+    
+    [HttpGet("user")]
+    public async Task<ActionResult> TryGetUser([FromQuery] string codeForcesId)
+    {
+        try
+        {
+            var profile = await _registration.TryGetProfile(codeForcesId);
+            if (profile == null)
+                return FailedUserFetchResult(codeForcesId);
+
+            return FromContent(JsonSerializer.Serialize(profile), 200);
+        }
+        catch
+        {
+            return InternalError();
+        }
+    }
 }

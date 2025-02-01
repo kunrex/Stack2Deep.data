@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 
-using Stack2Deep.Dal.Structures.User;
-
 using Stack2Deep.Services.Interfaces;
 
 namespace Stack2Deep.Controllers;
@@ -27,9 +25,6 @@ internal sealed class RegistrationController : BaseController
             var rating = await _codeForces.GetRating(codeforcesId);
             if (!rating.Item1)
                 return FromContent($"Failed to get codeforces rating for the handle: {codeforcesId}.", 400);
-            
-            if(await _registration.TryGetProfile(codeforcesId) != null)
-                return FromContent($"User: {codeforcesId} already exists.", 400);
             
             await _registration.TryCreateProfile(codeforcesId, ethereumAddress, discordUsername, rating.Item2, balance);
             return new JsonResult(new { message = true, code = 200 });

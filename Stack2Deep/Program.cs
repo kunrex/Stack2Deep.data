@@ -6,6 +6,9 @@ public static class Program
     private static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
         {
-            webBuilder.UseStartup<StartUp>();
+            webBuilder.UseStartup<StartUp>().ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(5000); 
+            });
         });
 }

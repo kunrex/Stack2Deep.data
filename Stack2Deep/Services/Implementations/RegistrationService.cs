@@ -102,6 +102,18 @@ internal sealed class RegistrationService : DataBaseService, IRegistrationServic
         }
 
         return users;
+    }
 
+    public async Task<bool> DeleteGroup(string groupName)
+    {
+        var group = await TryGetGroup(groupName);
+        if (group == null)
+            return false;
+
+        var contexts = context.Contexts.Where(x => x.GroupProfileId == group.Id);
+        foreach (var ctx in contexts)
+            await RemoveEntity(ctx);
+
+        return await RemoveEntity(group);
     }
 }

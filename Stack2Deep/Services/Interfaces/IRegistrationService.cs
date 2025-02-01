@@ -16,4 +16,6 @@ internal interface IRegistrationService
     public Task<bool> TryGroupPlayer(string codeforcesId, string groupName);
 
     public Task<UserProfile[]?> TryGetProfiles(GroupProfile group);
+
+    public Task<bool> DeleteGroup(string groupName);
 }
