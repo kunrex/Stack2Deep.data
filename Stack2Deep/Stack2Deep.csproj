@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Stack2Deep.Dal.Migrations\Stack2Deep.Dal.Migrations.csproj" />
       <ProjectReference Include="..\Stack2Deep.Dal\Stack2Deep.Dal.csproj" />
     </ItemGroup>
 
