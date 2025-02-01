@@ -35,5 +35,5 @@ Desktop.ini
 
 Stack2Deep/ignore
 
-Stack2Deep/Dal/Migrations
-Stack2Deep/Dal/ignore
+Stack2Deep.Dal/Migrations
+Stack2Deep.Dal/ignore
