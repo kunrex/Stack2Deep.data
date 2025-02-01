@@ -1,21 +1,10 @@
 using Newtonsoft.Json;
 
+using Stack2Deep.Dal.Configuration;
+
 namespace Stack2Deep.Configuration;
 
 public static class StackConfigurationManager
 {
-    public static Configuration Configuration { get; private set; } = FromJsonFile<Configuration>("ignore", "config.json");
-    private static T FromJsonFile<T>(params string[] path) where T : class
-    {
-        var stringPath = File.ReadAllText(Path.Combine(path));
-        var result = JsonConvert.DeserializeObject<T>(stringPath);
-        
-        if (result == null)
-        {
-            Console.WriteLine($"Failed to read file at `{stringPath}`");
-            return null;
-        }
-
-        return result;
-    }
+    public static StackConfiguration Configuration { get; private set; } = DataConfigurationManager.FromJsonFile<StackConfiguration>("..", "ignore", "config.json");
 }

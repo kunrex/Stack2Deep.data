@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 using Stack2Deep.Dal.Structures.Contexts;
 using Stack2Deep.Dal.Structures.User;
 

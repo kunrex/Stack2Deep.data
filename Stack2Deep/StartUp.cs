@@ -2,11 +2,12 @@ using System;
 
 using Microsoft.EntityFrameworkCore;
 
+using Stack2Deep.Configuration;
+
 using Stack2Deep.Dal;
 
 using Stack2Deep.CodeForces;
-using Stack2Deep.Configuration;
-
+using Stack2Deep.Dal.Configuration;
 using Stack2Deep.Services.Interfaces;
 using Stack2Deep.Services.Implementations;
 
@@ -18,7 +19,7 @@ public class StartUp
     {
         Console.WriteLine("Configuring Services...");
         
-        var config = StackConfigurationManager.Configuration;
+        var config = DataConfigurationManager.DataConfiguration;
         
         services.AddDbContext<DataContext>(options =>
         {

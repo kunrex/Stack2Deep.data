@@ -1,6 +1,6 @@
-namespace Stack2Deep.Configuration;
+namespace Stack2Deep.Dal.Configuration;
 
-public sealed class Configuration
+public sealed class DataConfiguration
 {
     public string Host { get; set; }
     
@@ -9,5 +9,4 @@ public sealed class Configuration
     
     public string Database { get; set; }
     
-    public int CallGap { get; set; }
 }
