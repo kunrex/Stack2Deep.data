@@ -32,7 +32,7 @@ internal sealed class CodeForcesController : BaseController
 
             profile.CodeForcesRating = rating.Item2;
             await _registration.UpdateProfile(profile);
-            return FromContent((rating.Item2 - profile.CodeForcesRating).ToString(), 200);
+            return new JsonResult( new { message = rating.Item2 - profile.CodeForcesRating, code = 200 });
         }
         catch 
         {

@@ -26,7 +26,7 @@ internal sealed class UpdateController : BaseController
 
             profile.EthereumBalance = newBalance;
             await _registration.UpdateProfile(profile);
-            return FromContent(true.ToString(), 200);
+            return new JsonResult( new { message = true, code = 200 });
         }
         catch
         {
@@ -49,8 +49,8 @@ internal sealed class UpdateController : BaseController
                 if (DateTimeOffset.UtcNow > group.FinishDate + TimeSpan.FromDays(StackConfigurationManager.Configuration.DayGap));
                     await _registration.DeleteGroup(groupName);
             }
-            
-            return FromContent(result.ToString(), 200);
+
+            return new JsonResult( new { message = result, code = 200 });
         }
         catch
         {

@@ -1,5 +1,5 @@
 using System.Text.Json;
-
+using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.Mvc;
 
 using Stack2Deep.Services.Interfaces;
@@ -29,8 +29,8 @@ internal sealed class AccessController : BaseController
             var users = await _registration.TryGetProfiles(group);
             if(users == null)
                 return FromContent($"Failed to find profiles for group: {groupName}", 500);
-            
-            return FromContent(JsonSerializer.Serialize(users.Select(x => x.CodeforcesId)), 200);
+
+            return new JsonResult( new { message = users.Select(x => x.CodeforcesId).ToArray(), code = 200 });
         }
         catch
         {
@@ -47,7 +47,7 @@ internal sealed class AccessController : BaseController
             if (profile == null)
                 return FailedUserFetchResult(codeForcesId);
 
-            return FromContent(JsonSerializer.Serialize(profile), 200);
+            return new JsonResult( new { message = profile, code = 200 });
         }
         catch
         {

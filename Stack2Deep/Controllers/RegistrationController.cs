@@ -27,7 +27,7 @@ internal sealed class RegistrationController : BaseController
                 return FromContent($"Failed to get codeforces rating for the handle: {codeforcesId}.", 400);
             
             await _registration.TryCreateProfile(codeforcesId, ethereumAddress, discordUsername, rating.Item2, balance);
-            return new JsonResult(new { message = true, code = 200 });
+            return new JsonResult( new { message = true, code = 200 });
         }
         catch
         {
@@ -48,7 +48,7 @@ internal sealed class RegistrationController : BaseController
                 return FailedUserFetchResult(codeForcesId);
             
             if(await _registration.TryGroupPlayer(groupName, codeForcesId))
-                return FromContent(true.ToString(), 200);
+                return new JsonResult( new { message = true, code = 200 });
 
             return FromContent($"Failed to register player: {codeForcesId} to group: {groupName}", 500);
         }
@@ -75,7 +75,7 @@ internal sealed class RegistrationController : BaseController
             await _registration.TryCreateGroup(groupName, DateTimeOffset.UtcNow, finishDate.Value);
             
             if(await _registration.TryGroupPlayer(groupName, creatorCodeForcesId))
-                return FromContent(true.ToString(), 200);
+                return new JsonResult( new { message = true, code = 200 });
 
             return FromContent($"Failed to create group: {groupName}", 500);
         }
