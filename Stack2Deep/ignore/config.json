@@ -1,0 +1,10 @@
+{ 
+  "Host" : "localhost",
+  
+  "Username" : "codeforce",
+  "Password" : "forcecode",
+  
+  "Database" : "data.db",
+  
+  "CallGap" : 300
+}
